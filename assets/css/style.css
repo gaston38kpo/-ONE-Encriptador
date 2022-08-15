@@ -71,6 +71,7 @@ main {
   align-items: center;
   justify-content: flex-end;
   margin: 0px 32px;
+  padding: 32px 0;
 }
 
 .input_section > textarea {
@@ -126,7 +127,7 @@ button:hover {
 
 /* output */
 .output_section {
-  padding: 32px 32px 0;
+  padding: 32px ;
   background: #fff;
   border-radius: 24px;
   box-shadow: 8px 16px 32px -8px rgb(0 0 0 / 20%);
