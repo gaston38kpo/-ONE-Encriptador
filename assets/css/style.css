@@ -35,6 +35,14 @@
   background: #f9aa33;
 }
 
+a,
+a:visited,
+a:hover,
+a:focus {
+  color: var(--font-color-2);
+  text-decoration: none;
+}
+
 /* Page */
 body {
   font-family: "Inter", sans-serif;
