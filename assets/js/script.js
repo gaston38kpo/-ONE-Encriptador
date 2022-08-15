@@ -1,12 +1,3 @@
-// let ui = {
-//   inputText: document.getElementById("input_text"),
-//   outputText: document.getElementById("output_text"),
-//   outputTextBox: document.getElementById("output_text_box"),
-//   outputImageBox: document.getElementById("output_image_box"),
-//   encryptButton: document.getElementById("encrypt_button"),
-//   desencryptButton: document.getElementById("desencrypt_button"),
-//   clipboardCopyButton: document.getElementById("clipboard_copy_button"),
-// };
 let inputText = document.getElementById("input_text");
 let outputText = document.getElementById("output_text");
 let outputTextBox = document.getElementById("output_text_box");
@@ -24,7 +15,8 @@ let cryptoDictionary = {
 };
 
 function verifyLowerCase(text) {
-  return text.match(/^[a-z ]*$/) ? true : false;
+  return text.match(/^[A-Zàèéòùïêèçäëïöü]+$/) ? false : true;
+  // return text.match(/^[a-z ]*$/) ? true : false;
 }
 
 /**
@@ -58,7 +50,8 @@ function desencrypt(encryptedText, cryptoDictionary) {
 }
 
 function setIfIsValid(text) {
-  let errorMessage = "Entrada invalida, por favor escriba un texto en minúsculas y sin acentos.";
+  let errorMessage =
+    "Entrada invalida, por favor escriba un texto en minúsculas y sin acentos.";
 
   outputTextBox.style.display = text.trim() == "" ? "none" : "flex";
   outputImageBox.style.display = text.trim() == "" ? "block" : "none";
