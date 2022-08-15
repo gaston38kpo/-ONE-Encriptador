@@ -57,6 +57,7 @@ function setIfIsValid(text) {
   outputImageBox.style.display = text.trim() == "" ? "block" : "none";
 
   outputText.value = verifyLowerCase(text) ? text : errorMessage;
+  inputText.value = verifyLowerCase(text) ? "" : inputText.value;
 }
 
 encryptButton.onclick = () => {
