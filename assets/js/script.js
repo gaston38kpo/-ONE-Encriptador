@@ -16,7 +16,6 @@ let cryptoDictionary = {
 
 function verifyLowerCase(text) {
   return text.match(/^[A-Zàèéòùïêèçäëïöü]+$/) ? false : true;
-  // return text.match(/^[a-z ]*$/) ? true : false;
 }
 
 /**
@@ -71,4 +70,5 @@ desencryptButton.onclick = () => {
 /* Copying the text in the output text box to the clipboard. */
 clipboardCopyButton.onclick = () => {
   navigator.clipboard.writeText(outputText.value);
+  outputText.value = "Texto copiado correctamente.";
 };
