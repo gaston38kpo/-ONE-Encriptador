@@ -58,7 +58,7 @@ function desencrypt(encryptedText) {
 }
 
 function isBasicLowerCase(text) {
-  return text.match(/^[A-Záàâäéèêëíìîïóòôöúùûü]+$/) ? false : true;
+  return text.match(/^[a-z ]+$/) ? true : false;
 }
 
 /**
