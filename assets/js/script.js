@@ -71,8 +71,7 @@ function setIfIsValid(action) {
 
   let isEmpty = text.trim() === "";
 
-  let errorMessage =
-    "Entrada invalida:\n\tEscriba en minúsculas y sin acentos.";
+  let errorMessage = "Entrada invalida:\nEscriba en minúsculas y sin acentos.";
 
   ui.inputText.value = isBasicLowerCase(text) ? "" : ui.inputText.value;
   ui.outputText.value = isBasicLowerCase(text) ? action(text) : errorMessage;
