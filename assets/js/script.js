@@ -1,12 +1,22 @@
-let inputText = document.getElementById("input_text");
-let outputText = document.getElementById("output_text");
-let outputTextBox = document.getElementById("output_text_box");
-let outputImageBox = document.getElementById("output_image_box");
-let encryptButton = document.getElementById("encrypt_button");
-let desencryptButton = document.getElementById("desencrypt_button");
-let clipboardCopyButton = document.getElementById("clipboard_copy_button");
+function selectID(id) {
+  return document.getElementById(id);
+}
 
-let cryptoDictionary = {
+const ui = {
+  inputText: selectID("input_text"),
+  outputText: selectID("output_text"),
+  outputTextBox: selectID("output_text_box"),
+  outputImageBox: selectID("output_image_box"),
+  encryptButton: selectID("encrypt_button"),
+  desencryptButton: selectID("desencrypt_button"),
+  clipboardCopyButton: selectID("clipboard_copy_button"),
+};
+
+/* It sets the focus on the input text. */
+ui.inputText.focus();
+
+/* A dictionary that contains the letters that will be replaced. */
+var cryptoDictionary = {
   a: "ai",
   e: "enter",
   i: "imes",
@@ -14,22 +24,21 @@ let cryptoDictionary = {
   u: "ufat",
 };
 
-function verifyLowerCase(text) {
-  return text.match(/^[A-Zàèéòùïêèçäëïöü]+$/) ? false : true;
-}
-
 /**
  * It takes a string and a dictionary as arguments, and returns a string where each
  * character in the original string is replaced by the value of the key in the
  * dictionary that matches the character.
  */
-function encrypt(text, cryptoDictionary) {
+function encrypt(text) {
   let encryptedText = "";
 
   for (let iLetter = 0; iLetter < text.length; iLetter++) {
-    encryptedText += cryptoDictionary[text[iLetter]]
-      ? cryptoDictionary[text[iLetter]]
-      : text[iLetter];
+    let currentLetter = text[iLetter];
+
+    encryptedText +=
+      cryptoDictionary[currentLetter] === undefined
+        ? currentLetter
+        : cryptoDictionary[currentLetter];
   }
 
   return encryptedText;
@@ -38,7 +47,7 @@ function encrypt(text, cryptoDictionary) {
 /**
  * It replaces the encrypted letters with the original letters
  */
-function desencrypt(encryptedText, cryptoDictionary) {
+function desencrypt(encryptedText) {
   let desencryptedText = encryptedText;
 
   for (let key in cryptoDictionary) {
@@ -48,27 +57,65 @@ function desencrypt(encryptedText, cryptoDictionary) {
   return desencryptedText;
 }
 
-function setIfIsValid(text) {
-  let errorMessage =
-    "Entrada invalida, por favor escriba un texto en minúsculas y sin acentos.";
-
-  outputTextBox.style.display = text.trim() == "" ? "none" : "flex";
-  outputImageBox.style.display = text.trim() == "" ? "block" : "none";
-
-  outputText.value = verifyLowerCase(text) ? text : errorMessage;
-  inputText.value = verifyLowerCase(text) ? "" : inputText.value;
+function isBasicLowerCase(text) {
+  return text.match(/^[A-Záàâäéèêëíìîïóòôöúùûü]+$/) ? false : true;
 }
 
-encryptButton.onclick = () => {
-  setIfIsValid(encrypt(inputText.value, cryptoDictionary));
-};
+/**
+ * It takes a function as an argument, and if the input is valid, it calls the
+ * function and displays the result.
+ * @param action - a function that takes a string and returns a string
+ */
+function setIfIsValid(action) {
+  const text = ui.inputText.value;
 
-desencryptButton.onclick = () => {
-  setIfIsValid(desencrypt(inputText.value, cryptoDictionary));
-};
+  let isEmpty = text.trim() === "";
 
-/* Copying the text in the output text box to the clipboard. */
-clipboardCopyButton.onclick = () => {
-  navigator.clipboard.writeText(outputText.value);
-  outputText.value = "Texto copiado correctamente.";
-};
+  let errorMessage =
+    "Entrada invalida:\n\tEscriba en minúsculas y sin acentos.";
+
+  ui.inputText.value = isBasicLowerCase(text) ? "" : ui.inputText.value;
+  ui.outputText.value = isBasicLowerCase(text) ? action(text) : errorMessage;
+
+  ui.outputTextBox.style.display = isEmpty ? "none" : "flex";
+  ui.outputImageBox.style.display = isEmpty ? "block" : "none";
+}
+
+ui.encryptButton.onclick = () => setIfIsValid(encrypt);
+
+ui.desencryptButton.onclick = () => setIfIsValid(desencrypt);
+
+/**
+ * If the browser supports the Clipboard API, use it. Otherwise, fall back to the
+ * old method
+ */
+function copyToClipboard() {
+  const text = ui.outputText.value;
+  navigator.clipboard.writeText(text).then(
+    () => {
+      alert("Texto copiado correctamente.");
+    },
+    () => {
+      copyToClipboardOld();
+    }
+  );
+}
+
+/**
+ * The function first selects the text in the textarea, then tries to copy it to
+ * the clipboard. If it fails, it alerts the user
+ */
+function copyToClipboardOld() {
+  ui.outputText.focus();
+  ui.outputText.select();
+
+  try {
+    var successful = document.execCommand("copy");
+    var msg = successful ? "fue satisfactoria." : "falló.";
+    alert("La copia el texto " + msg);
+  } catch (err) {
+    alert("Fallback: Oops, unable to copy", err);
+  }
+}
+
+ui.clipboardCopyButton.onclick = copyToClipboard;
