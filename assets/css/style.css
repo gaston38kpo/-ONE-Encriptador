@@ -218,6 +218,15 @@ button:hover {
     padding: 12px 0;
   }
 
+  main{    
+    align-items: flex-start;
+    min-height: 95vh;
+  }
+
+  .body_footer {
+    min-height: 5vh;
+  }
+
   .box {
     flex-direction: column;
     width: 100%;
@@ -225,7 +234,7 @@ button:hover {
   }
 
   .web_logo {
-    margin-top: 32px;
+    margin-top: 16px;
   }
 
   .input_section {
