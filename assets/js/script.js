@@ -77,7 +77,7 @@ function setIfIsValid(action) {
   ui.outputText.value = isBasicLowerCase(text) ? action(text) : errorMessage;
 
   ui.outputTextBox.style.display = isEmpty ? "none" : "flex";
-  ui.outputImageBox.style.display = isEmpty ? "block" : "none";
+  ui.outputImageBox.style.display = isEmpty ? "flex" : "none";
 }
 
 ui.encryptButton.onclick = () => setIfIsValid(encrypt);
