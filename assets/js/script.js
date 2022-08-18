@@ -71,7 +71,8 @@ function setIfIsValid(action) {
 
   let isEmpty = text.trim() === "";
 
-  let errorMessage = "Entrada invalida:\nEscriba en minúsculas y sin acentos.";
+  let errorMessage =
+    "Entrada invalida:\nEscriba en minúsculas, sin acentos y evite usar caracteres especiales";
 
   ui.inputText.value = isBasicLowerCase(text) ? "" : ui.inputText.value;
   ui.outputText.value = isBasicLowerCase(text) ? action(text) : errorMessage;
@@ -110,9 +111,9 @@ function copyToClipboardOld() {
   try {
     var successful = document.execCommand("copy");
     var msg = successful ? "fue satisfactoria." : "falló.";
-    alert("La copia el texto " + msg);
+    alert("La copia del texto " + msg);
   } catch (err) {
-    alert("Fallback: Oops, unable to copy", err);
+    alert("Ups! hubo un problema: ", err);
   }
 }
 
