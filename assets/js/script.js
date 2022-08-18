@@ -77,8 +77,13 @@ function setIfIsValid(action) {
   ui.inputText.value = isBasicLowerCase(text) ? "" : ui.inputText.value;
   ui.outputText.value = isBasicLowerCase(text) ? action(text) : errorMessage;
 
+  if (isEmpty) {
+    ui.outputImageBox.classList.remove("inactive");
+  } else {
+    ui.outputImageBox.classList.add("inactive");
+  }
+
   ui.outputTextBox.style.display = isEmpty ? "none" : "flex";
-  ui.outputImageBox.style.display = isEmpty ? "block" : "none";
 }
 
 ui.encryptButton.onclick = () => setIfIsValid(encrypt);

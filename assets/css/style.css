@@ -151,7 +151,6 @@ button:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* min-width: max(20vw, 200px); */
 }
 
 .output_text_box {
@@ -181,6 +180,10 @@ button:hover {
 
 #clipboard_copy_button {
   width: 100%;
+}
+
+.inactive {
+  display: none !important;
 }
 
 .output_image_box {
