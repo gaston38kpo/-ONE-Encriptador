@@ -89,6 +89,8 @@ ui.desencryptButton.onclick = () => setIfIsValid(desencrypt);
  * old method
  */
 function copyToClipboard() {
+  ui.outputText.select();
+
   const text = ui.outputText.value;
   navigator.clipboard.writeText(text).then(
     () => {
@@ -105,9 +107,6 @@ function copyToClipboard() {
  * the clipboard. If it fails, it alerts the user
  */
 function copyToClipboardOld() {
-  ui.outputText.focus();
-  ui.outputText.select();
-
   try {
     var successful = document.execCommand("copy");
     var msg = successful ? "fue satisfactoria." : "falló.";
